@@ -1,0 +1,68 @@
+name: Performance Issue
+description: Report a performance problem
+title: "[Performance]: "
+labels: ["performance"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a performance issue!
+        
+  - type: dropdown
+    id: performance-type
+    attributes:
+      label: Performance Type
+      description: What type of performance issue are you experiencing?
+      options:
+        - Loading Time
+        - Runtime Performance
+        - Memory Usage
+        - Network Requests
+        - Animation/Rendering
+        - Other
+    validations:
+      required: true
+      
+  - type: input
+    id: metrics
+    attributes:
+      label: Performance Metrics
+      description: If available, provide specific metrics (e.g., load time, memory usage)
+      placeholder: "e.g., 5s load time, 500MB memory usage"
+      
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this performance issue?
+      placeholder: |
+        1. Go to '...'
+        2. Perform action '...'
+        3. Observe performance issue
+    validations:
+      required: true
+      
+  - type: textarea
+    id: profile
+    attributes:
+      label: Performance Profile
+      description: If available, provide performance profiling data
+      render: shell
+      
+  - type: checkboxes
+    id: environment
+    attributes:
+      label: Environment
+      description: Select all that apply
+      options:
+        - label: Development Environment
+        - label: Production Environment
+        - label: Mobile Devices
+        - label: Desktop Browsers
+        - label: Large Dataset
+        
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any additional context about the performance issue

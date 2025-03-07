@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-demon-black text-white;
+  }
+}
+
+@layer components {
+  .demon-button {
+    @apply px-4 py-2 bg-demon-red/10 hover:bg-demon-red/20 
+           border border-demon-red/30 rounded-lg transition-all duration-300
+           hover:shadow-demon flex items-center space-x-2;
+  }
+
+  .demon-panel {
+    @apply bg-demon-dark/80 backdrop-blur-sm border border-demon-red/30 
+           rounded-lg p-6 shadow-demon hover:shadow-demon-hover transition-all duration-300;
+  }
+
+  .demon-input {
+    @apply bg-demon-black/50 border border-demon-red/30 rounded-lg px-4 py-2
+           focus:outline-none focus:border-demon-red focus:ring-2 focus:ring-demon-red/50
+           transition-all duration-300;
+  }
+
+  .demon-slider {
+    @apply w-full h-2 bg-gradient-to-r from-demon-red to-demon-orange
+           rounded-full appearance-none cursor-pointer;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-demon-black;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-demon-red/50 rounded-full hover:bg-demon-red/70 transition-colors duration-300;
+}
+
+/* ArcGIS Map Customizations */
+.esri-view {
+  @apply bg-demon-dark !important;
+}
+
+.esri-popup__main-container {
+  @apply bg-black/80 backdrop-blur-sm border border-red-900/30 rounded-lg text-white !important;
+}
+
+.esri-popup__pointer-direction {
+  @apply bg-black/80 !important;
+}
+
+.esri-widget {
+  @apply bg-black/80 backdrop-blur-sm border border-red-900/30 rounded-lg overflow-hidden !important;
+}
+
+.esri-widget button {
+  @apply bg-transparent hover:bg-demon-red/20 transition-colors !important;
+}
+
+.esri-widget button span {
+  @apply text-white !important;
+}

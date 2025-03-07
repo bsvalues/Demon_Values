@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Demon Valuation Agent - Advanced Real Estate Valuation Platform" />
+    <title>Demon Valuation Agent</title>
+    
+    <!-- Preload critical assets -->
+    <link rel="preconnect" href="https://api.mapbox.com" crossorigin>
+    <link rel="preconnect" href="https://events.mapbox.com" crossorigin>
+    <link rel="dns-prefetch" href="https://api.mapbox.com">
+    <link rel="dns-prefetch" href="https://events.mapbox.com">
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Meta tags for better SEO -->
+    <meta name="theme-color" content="#EF4444">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Demon Valuation Agent">
+    <meta property="og:description" content="Advanced Real Estate Valuation Platform">
+    <meta property="og:type" content="website">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- Preload ML models -->
+    <link rel="modulepreload" href="/ml/property-valuation.json">
+  </body>
+</html>

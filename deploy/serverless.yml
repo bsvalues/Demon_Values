@@ -1,0 +1,94 @@
+service: demon-valuation-agent
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'prod'}
+  region: ${opt:region, 'us-east-1'}
+  memorySize: 2048
+  timeout: 30
+
+  environment:
+    SUPABASE_URL: ${env:VITE_SUPABASE_URL}
+    SUPABASE_ANON_KEY: ${env:VITE_SUPABASE_ANON_KEY}
+    MAPBOX_TOKEN: ${env:VITE_MAPBOX_TOKEN}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:GetObject
+      Resource: "arn:aws:s3:::${self:custom.bucketName}/*"
+
+custom:
+  bucketName: demon-valuation-agent-${self:provider.stage}
+  cloudfront:
+    comment: Demon Valuation Agent Distribution
+    enabled: true
+    priceClass: PriceClass_100
+    origins:
+      - DomainName: ${self:custom.bucketName}.s3.amazonaws.com
+        Id: S3Origin
+        S3OriginConfig:
+          OriginAccessIdentity: ""
+
+functions:
+  propertyValuation:
+    handler: src/handlers/propertyValuation.handler
+    events:
+      - http:
+          path: /api/valuation
+          method: post
+          cors: true
+
+  marketAnalysis:
+    handler: src/handlers/marketAnalysis.handler
+    events:
+      - http:
+          path: /api/market-analysis
+          method: post
+          cors: true
+
+  anomalyDetection:
+    handler: src/handlers/anomalyDetection.handler
+    events:
+      - http:
+          path: /api/anomalies
+          method: post
+          cors: true
+
+  sentimentAnalysis:
+    handler: src/handlers/sentimentAnalysis.handler
+    events:
+      - http:
+          path: /api/sentiment
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    WebsiteBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.bucketName}
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders: ['*']
+              AllowedMethods: [GET]
+              AllowedOrigins: ['*']
+              MaxAge: 3000
+
+    WebsiteBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref WebsiteBucket
+        PolicyDocument:
+          Statement:
+            - Sid: PublicReadGetObject
+              Effect: Allow
+              Principal: '*'
+              Action: s3:GetObject
+              Resource: !Join ['', ['arn:aws:s3:::', !Ref WebsiteBucket, '/*']]
